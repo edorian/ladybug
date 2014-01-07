@@ -299,7 +299,10 @@ class Dumper
     public static function getCallLocationInfos()
     {
         $bt = debug_backtrace();
-        $idx = count($bt) - 1;
+        $idx = 0;
+        while (!isset($bt[$idx]['file']) || stripos($bt[$idx]['file'], 'ladybug') !== false) {
+            $idx++;
+        }
 
         return array(
             'caller'   => isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '',
